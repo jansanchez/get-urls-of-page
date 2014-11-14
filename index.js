@@ -36,23 +36,57 @@ request({url: url}, function(error, response, body){
 
     		var b = body.replace(/\'/gi, '"');
             
-    		//b = b.replace(/\'|\<\!\-\-|\-\-\>|\/\*|\*\//gi, "");
-    		//b = b.replace(/\<\!\[\CDATA\[|\]\]\>|\*/gi, "");
+  		    b = b.replace(/\'|\<\!\-\-|\-\-\>|\/\*|\*\//gi, "");
+    		b = b.replace(/\<\!\[\CDATA\[|\]\]\>|\*/gi, "");
 
-            //b = b.replace(/(\<\!\[endif\])/gi, "");
+            b = b.replace(/(\<\!\[endif\])/gi, "");
 
-            //b = b.replace(/(\[if lt IE 9\]\>)/gi, "");
+            b = b.replace(/(\[if lt IE 9\]\>)/gi, "");
 
-            //b = b.replace(/\<\!DOCTYPE html\>/gi, "");
+            b = b.replace(/\<\!DOCTYPE html\>/gi, "");
 
             
+            b = b.replace(/type=\"text\/javascript\"/gi, "");
+            b = b.replace(/type=\"text\/css\"/gi, "");
+            
+
+            b = b.replace(/(<script\s)(.)+(>)(<\/script>)/gi, "");
+
+            //b = b.replace(/(<script\s>)(\s*|.*)+(<\/script>)/gi, "");
+
+            
+            //b = b.replace(/(<style\s>)(\s*|.*)+(<\/style>)/gi, "");
+
+
+
+
+            
+            console.log(b);
+
+
+
+            var regex = /(href\=)(\"|\')(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?(\"|\')/g;
+
+            var arr = b.match(regex);
+            regex.lastIndex = 0
+            console.log(arr)
+            console.log(arr.length);
+
+
+
+            
+
+
+
+
 
                 		//b = b.replace(/(\<\s*script[^\>]*\>)(\s|.*)+(\<\s*\/\s*script\s*\>)/ig, "");
                         //b = b.replace(/(\<\s*script[^\>]*\>)(\s*|.*)+(\<\/\s*script[^\>]*\>)/ig, "");
                         //b = b.replace(/(\<\s*style[^\>]*\>)(\s*|.*)+(\<\/\s*style[^\>]*\>)/ig, "");
             
-            //b = b.replace(/(\<\s*script[^\>]*\>)(\s*|.*)+(\<\/\s*script[^\>]*\>)/ig, "");
-            
+                        //b = b.replace(/(\<\s*script[^\>]*\>)(\s*|.*)+(\<\/\s*script[^\>]*\>)/ig, "");
+
+
             /*
             b = htmlmin(b, {
                 removeComments: true,
@@ -70,14 +104,8 @@ request({url: url}, function(error, response, body){
             //console.log('- - - - - - - - - -');
 
 
-            b = b.replace(/\n*/gi, "");
 
-            b = htmlmin(b, {
-                removeComments: true
-            }) 
-
-
-    		console.log(b);
+    		
 /*
 var abc = 'Google Analytics<script type="text/javascript">
 (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){
@@ -94,12 +122,7 @@ ga("send", "pageview");
 
             console.log(abc);*/
 
-    		var regex = /(href\=)(\"|\')(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?(\"|\')/g;
 
-    		var arr = b.match(regex);
-    		regex.lastIndex = 0
-    		console.log(arr)
-    		console.log(arr.length);
     }
 });
 
